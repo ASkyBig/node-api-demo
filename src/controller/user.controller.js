@@ -13,6 +13,14 @@ class UserController {
     const { user_name, password } = ctx.request.body;
     const res = await createUser(user_name, password);
     console.log("res :>> ", res);
+    ctx.body = {
+      code: 0,
+      message: "register success",
+      result: {
+        id: res.id,
+        user_name: res.user_name
+      }
+    }
   }
 
   async login(ctx) {
