@@ -9,4 +9,9 @@ module.exports = {
     message: "user already exist",
     result: "",
   },
+  userRegisterError: {
+    code: "10003",
+    message: "register failed",
+    result: "",
+  },
 };

@@ -1,4 +1,5 @@
 const { createUser, getUserInfo } = require("../service/user.service");
+const { userRegisterError } = require("../constant/err.type");
 
 class UserController {
   // constructor({ userService }) {
@@ -32,17 +33,20 @@ class UserController {
     //   }
     //   return;
     // }
-
-    const res = await createUser(user_name, password);
-    console.log("res :>> ", res);
-    ctx.body = {
-      code: 0,
-      message: "register success",
-      result: {
-        id: res.id,
-        user_name: res.user_name,
-      },
-    };
+    try {
+      const res = await createUser(user_name, password);
+      console.log("res :>> ", res);
+      ctx.body = {
+        code: 0,
+        message: "register success",
+        result: {
+          id: res.id,
+          user_name: res.user_name,
+        },
+      };
+    } catch (error) {
+      ctx.app.emit("error", userRegisterError, ctx);
+    }
   }
 
   async login(ctx) {

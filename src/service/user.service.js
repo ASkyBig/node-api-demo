@@ -6,6 +6,7 @@ class UserService {
       user_name,
       password,
     });
+    console.log(aaa);
     return res.dataValues;
   }
 

@@ -1,5 +1,9 @@
 const { getUserInfo } = require("../service/user.service");
-const { userFormatError, userAlreadyExist } = require("../constant/err.type");
+const {
+  userFormatError,
+  userAlreadyExist,
+  userRegisterError,
+} = require("../constant/err.type");
 
 const userValidator = async (ctx, next) => {
   const { user_name, password } = ctx.request.body;
@@ -20,16 +24,27 @@ const userValidator = async (ctx, next) => {
 const verifyUser = async (ctx, next) => {
   const { user_name } = ctx.request.body;
 
-  if (await getUserInfo({ user_name })) {
-    // ctx.status = 409;
-    // ctx.body = {
-    //   code: "10002",
-    //   message: "user already exist",
-    //   result: "",
-    // };
-    ctx.app.emit("error", userAlreadyExist, ctx);
+  try {
+    const res = await getUserInfo({ user_name });
+    if (res) {
+      ctx.app.emit("error", userAlreadyExist, ctx);
+      return;
+    }
+  } catch (error) {
+    ctx.app.emit("error", userRegisterError, ctx);
     return;
   }
+
+  // if (await getUserInfo({ user_name })) {
+  //   // ctx.status = 409;
+  //   // ctx.body = {
+  //   //   code: "10002",
+  //   //   message: "user already exist",
+  //   //   result: "",
+  //   // };
+  //   ctx.app.emit("error", userAlreadyExist, ctx);
+  //   return;
+  // }
   await next();
 };
 
