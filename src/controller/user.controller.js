@@ -1,5 +1,7 @@
+const jwt = require("jsonwebtoken");
 const { createUser, getUserInfo } = require("../service/user.service");
 const { userRegisterError } = require("../constant/err.type");
+const { JWT_SECRET } = require("../config.default");
 
 class UserController {
   // constructor({ userService }) {
@@ -51,7 +53,33 @@ class UserController {
 
   async login(ctx) {
     const { user_name } = ctx.request.body;
-    ctx.body = `Hello ${user_name}`;
+    try {
+      const res = await getUserInfo({ user_name });
+      if (!res) {
+        ctx.app.emit("error", userDoesNotExist, ctx);
+        return;
+      }
+      const token = jwt.sign(
+        {
+          id: res.id,
+          user_name: res.user_name,
+        },
+        JWT_SECRET,
+        { expiresIn: "1d" }
+      );
+      ctx.body = {
+        code: 0,
+        message: "login success",
+        result: {
+          id: res.id,
+          user_name: res.user_name,
+          token,
+        },
+      };
+    } catch (error) {
+      console.log("login error :>> ", error);
+      ctx.app.emit("error", userLoginError, ctx);
+    }
   }
 }
 
