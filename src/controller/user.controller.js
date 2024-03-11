@@ -1,5 +1,9 @@
 const jwt = require("jsonwebtoken");
-const { createUser, getUserInfo } = require("../service/user.service");
+const {
+  createUser,
+  getUserInfo,
+  updateById,
+} = require("../service/user.service");
 const { userRegisterError } = require("../constant/err.type");
 const { JWT_SECRET } = require("../config.default");
 
@@ -65,7 +69,7 @@ class UserController {
           user_name: res.user_name,
         },
         JWT_SECRET,
-        { expiresIn: "1d" }
+        { expiresIn: "1h" }
       );
       ctx.body = {
         code: 0,
@@ -80,6 +84,49 @@ class UserController {
       console.log("login error :>> ", error);
       ctx.app.emit("error", userLoginError, ctx);
     }
+  }
+
+  async changePassword(ctx, next) {
+    const id = ctx.state.user.id;
+    const password = ctx.request.body.password;
+    console.log("id :>> ", id);
+    console.log("password :>> ", password);
+    if (await updateById({ id, password })) {
+      ctx.body = {
+        code: 0,
+        message: "change password success",
+        result: "",
+      };
+    } else {
+      ctx.app.emit("error", userChangePasswordError, ctx);
+    }
+    // try {
+    //   const res = await updateUser(id, password);
+    //   ctx.body = {
+    //     code: 0,
+    //     message: "change password success",
+    //     result: {
+    //       id: res.id,
+    //       user_name: res.user_name,
+    //     },
+    //   };
+    // } catch (error) {
+    //   ctx.app.emit("error", userChangePasswordError, ctx);
+    // }
+    // const { user_name, password } = ctx.request.body;
+    // try {
+    //   const res = await updateUser(user_name, password);
+    //   ctx.body = {
+    //     code: 0,
+    //     message: "change password success",
+    //     result: {
+    //       id: res.id,
+    //       user_name: res.user_name,
+    //     },
+    //   };
+    // } catch (error) {
+    //   ctx.app.emit("error", userChangePasswordError, ctx);
+    // }
   }
 }
 

@@ -29,4 +29,19 @@ module.exports = {
     message: "invalid password",
     result: "",
   },
+  userChangePasswordError: {
+    code: "10007",
+    message: "change password failed",
+    result: "",
+  },
+  TokenExpiredError: {
+    code: "10101",
+    message: "token expired",
+    result: "",
+  },
+  invalidToken: {
+    code: "10102",
+    message: "invalid token",
+    result: "",
+  },
 };
