@@ -4,6 +4,9 @@ const {
   userFormatError,
   userAlreadyExist,
   userRegisterError,
+  userDoesNotExist,
+  userLoginError,
+  invalidPassword,
 } = require("../constant/err.type");
 
 const userValidator = async (ctx, next) => {
@@ -49,6 +52,31 @@ const verifyUser = async (ctx, next) => {
   await next();
 };
 
+const verifyLogin = async (ctx, next) => {
+  const { user_name, password } = ctx.request.body;
+  console.log("user_name :>> ", user_name);
+  console.log("password :>> ", password);
+  try {
+    const user = await getUserInfo({ user_name });
+    console.log("user :>> ", user);
+    if (!user) {
+      ctx.app.emit("error", userDoesNotExist, ctx);
+      return;
+    }
+    const isMatch = bcrypt.compareSync(password, user.password);
+    if (!isMatch) {
+      ctx.app.emit("error", invalidPassword, ctx);
+      return;
+    }
+  } catch (error) {
+    console.log("error :>> ", error);
+    ctx.app.emit("error", userLoginError, ctx);
+    return;
+  }
+
+  await next();
+};
+
 const cryptPassword = async (ctx, next) => {
   const { password } = ctx.request.body;
   const salt = bcrypt.genSaltSync(10);
@@ -60,5 +88,6 @@ const cryptPassword = async (ctx, next) => {
 module.exports = {
   userValidator,
   verifyUser,
+  verifyLogin,
   cryptPassword,
 };

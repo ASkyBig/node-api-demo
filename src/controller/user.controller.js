@@ -50,7 +50,8 @@ class UserController {
   }
 
   async login(ctx) {
-    ctx.body = "This is the users endpoint";
+    const { user_name } = ctx.request.body;
+    ctx.body = `Hello ${user_name}`;
   }
 }
 

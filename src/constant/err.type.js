@@ -14,4 +14,19 @@ module.exports = {
     message: "register failed",
     result: "",
   },
+  userDoesNotExist: {
+    code: "10004",
+    message: "user does not exist",
+    result: "",
+  },
+  userLoginError: {
+    code: "10005",
+    message: "login failed",
+    result: "",
+  },
+  invalidPassword: {
+    code: "10006",
+    message: "invalid password",
+    result: "",
+  },
 };
