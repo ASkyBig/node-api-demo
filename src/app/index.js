@@ -1,5 +1,9 @@
+const path = require("path");
+const fs = require("fs");
 const Koa = require("koa");
 const { koaBody } = require("koa-body");
+const koaStatic = require("koa-static");
+
 const errHandler = require("./errHandler");
 
 const router = require("../router");
@@ -9,7 +13,25 @@ const router = require("../router");
 
 const app = new Koa();
 
-app.use(koaBody());
+app.use(
+  koaBody({
+    multipart: true,
+    formidable: {
+      uploadDir: path.join(__dirname, "../upload"), // 设置文件上传目录
+      keepExtensions: true, // 保持文件的后缀
+      maxFileSize: 200 * 1024 * 1024, // 设置上传文件大小最大限制，默认2M
+      onFileBegin: (name, file) => {
+        const fp = path.join(__dirname, "../upload");
+        if (!fs.existsSync(fp)) {
+          fs.mkdirSync(fp);
+        }
+        // const filePath = path.join(__dirname, "uploads", file.name);
+        // file.path = filePath;
+      },
+    },
+  })
+);
+app.use(koaStatic(path.join(__dirname, "../upload")));
 // app.use(userRouter.routes());
 // app.use(goodsRouter.routes());
 app.use(router.routes()).use(router.allowedMethods());

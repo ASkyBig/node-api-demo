@@ -49,4 +49,9 @@ module.exports = {
     message: "has not admin permission",
     result: "",
   },
+  fileUploadError: {
+    code: "10201",
+    message: "file upload failed",
+    result: "",
+  },
 };
