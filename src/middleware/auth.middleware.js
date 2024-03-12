@@ -1,6 +1,11 @@
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config.default");
-const { TokenExpiredError, invalidToken } = require("../constant/err.type");
+const {
+  TokenExpiredError,
+  invalidToken,
+  hasNotAdminPermission,
+} = require("../constant/err.type");
+const { getUserInfo } = require("../service/user.service");
 
 const auth = async (ctx, next) => {
   const { authorization = "" } = ctx.request.header;
@@ -8,8 +13,8 @@ const auth = async (ctx, next) => {
   console.log("token :>> ", token);
   try {
     const user = jwt.verify(token, JWT_SECRET);
-    console.log("user :>> ", user);
-    ctx.state.user = user;
+    const res = await getUserInfo({ user_name: user.user_name });
+    ctx.state.user = res;
   } catch (error) {
     console.log("error :>> ", error);
     switch (error.name) {
@@ -26,6 +31,15 @@ const auth = async (ctx, next) => {
   await next();
 };
 
+const hasAdminPermission = async (ctx, next) => {
+  const { is_admin } = ctx.state.user;
+  if (!is_admin) {
+    return ctx.app.emit("error", hasNotAdminPermission, ctx);
+  }
+  await next();
+};
+
 module.exports = {
   auth,
+  hasAdminPermission,
 };

@@ -44,4 +44,9 @@ module.exports = {
     message: "invalid token",
     result: "",
   },
+  hasNotAdminPermission: {
+    code: "10103",
+    message: "has not admin permission",
+    result: "",
+  },
 };

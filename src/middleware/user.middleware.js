@@ -58,7 +58,7 @@ const verifyLogin = async (ctx, next) => {
   console.log("password :>> ", password);
   try {
     const user = await getUserInfo({ user_name });
-    console.log("user :>> ", user);
+    console.log("verifyLogin user :>> ", user);
     if (!user) {
       ctx.app.emit("error", userDoesNotExist, ctx);
       return;
