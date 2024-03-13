@@ -64,4 +64,14 @@ module.exports = {
     message: "goods publish failed",
     result: "",
   },
+  goodsInvalidId: {
+    code: "10204",
+    message: "goods id invalid",
+    result: "",
+  },
+  goodsRemoveError: {
+    code: "10205",
+    message: "goods remove failed",
+    result: "",
+  },
 };

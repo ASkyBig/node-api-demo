@@ -1,6 +1,15 @@
 const path = require("path");
-const { fileUploadError, goodsPublishError } = require("../constant/err.type");
-const { createGoods } = require("../service/goods.service");
+const {
+  fileUploadError,
+  goodsPublishError,
+  goodsInvalidId,
+} = require("../constant/err.type");
+const {
+  createGoods,
+  updateGoods,
+  removeGoods,
+  goodsRemoveError,
+} = require("../service/goods.service");
 class GoodsController {
   async upload(ctx) {
     const { file } = ctx.request.files;
@@ -32,6 +41,37 @@ class GoodsController {
       console.log("error :>> ", error);
       return ctx.app.emit("error", goodsPublishError, ctx);
     }
+  }
+
+  async update(ctx) {
+    try {
+      const res = await updateGoods(ctx.params.id, ctx.request.body);
+      if (res) {
+        ctx.body = {
+          code: 0,
+          message: "update goods success",
+          result: ctx.request.body,
+        };
+      } else {
+        return ctx.app.emit("error", goodsInvalidId, ctx);
+      }
+    } catch (error) {
+      console.log("error :>> ", error);
+      return ctx.app.emit("error", goodsPublishError, ctx);
+    }
+  }
+
+  async remove(ctx) {
+    const res = await removeGoods(ctx.params.id);
+    console.log("remove -> res", res);
+    if (!res) {
+      return ctx.app.emit("error", goodsRemoveError, ctx);
+    }
+    ctx.body = {
+      code: 0,
+      message: "remove goods success",
+      result: "",
+    };
   }
 }
 
