@@ -57,6 +57,7 @@ class UserController {
 
   async login(ctx) {
     const { user_name } = ctx.request.body;
+    console.log("user_name :>> ", user_name);
     try {
       const res = await getUserInfo({ user_name });
       if (!res) {
@@ -66,10 +67,10 @@ class UserController {
       const token = jwt.sign(
         {
           id: res.id,
-          user_name: res.user_name,
+          // user_name: res.user_name,
         },
         JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "1d" }
       );
       ctx.body = {
         code: 0,

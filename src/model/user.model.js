@@ -9,7 +9,7 @@ const User = seq.define("yj_user", {
     unique: true,
   },
   password: {
-    type: DataTypes.CHAR(64), 
+    type: DataTypes.CHAR(64),
     allowNull: false,
   },
   is_admin: {
@@ -19,7 +19,7 @@ const User = seq.define("yj_user", {
   },
 });
 
-// User.sync({ force: false })
+// User.sync({ force: true })
 //   .then(() => {
 //     console.log("User table created");
 //   })
@@ -27,4 +27,4 @@ const User = seq.define("yj_user", {
 //     console.log("User table creation failed", err);
 //   });
 
-module.exports = User
+module.exports = User;
