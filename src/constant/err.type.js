@@ -54,4 +54,14 @@ module.exports = {
     message: "file upload failed",
     result: "",
   },
+  goodsFormatError: {
+    code: "10202",
+    message: "goods format error",
+    result: "",
+  },
+  goodsPublishError: {
+    code: "10203",
+    message: "goods publish failed",
+    result: "",
+  },
 };

@@ -3,6 +3,7 @@ const fs = require("fs");
 const Koa = require("koa");
 const { koaBody } = require("koa-body");
 const koaStatic = require("koa-static");
+const parameter = require("koa-parameter");
 
 const errHandler = require("./errHandler");
 
@@ -25,13 +26,12 @@ app.use(
         if (!fs.existsSync(fp)) {
           fs.mkdirSync(fp);
         }
-        // const filePath = path.join(__dirname, "uploads", file.name);
-        // file.path = filePath;
       },
     },
   })
 );
 app.use(koaStatic(path.join(__dirname, "../upload")));
+app.use(parameter(app));
 // app.use(userRouter.routes());
 // app.use(goodsRouter.routes());
 app.use(router.routes()).use(router.allowedMethods());
