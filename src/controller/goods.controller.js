@@ -11,6 +11,7 @@ const {
   updateGoods,
   removeGoods,
   restoreGoods,
+  findGoods,
 } = require("../service/goods.service");
 class GoodsController {
   async upload(ctx) {
@@ -91,6 +92,17 @@ class GoodsController {
         result: "",
       };
     }
+  }
+
+  async findAll(ctx) {
+    const { pageNum = 1, pageSize = 10 } = ctx.request.query;
+    const res = await findGoods({ pageNum, pageSize });
+
+    ctx.body = {
+      code: 0,
+      message: "find all goods success",
+      result: res,
+    };
   }
 }
 

@@ -35,6 +35,27 @@ class GoodsService {
     console.log("restoreGoods -> res", res);
     return res;
   }
+
+  async findGoods({ pageNum, pageSize }) {
+    // const count = await Goods.count();
+    // const rows = await Goods.findAll({
+    //   offset: (pageNum - 1) * pageSize,
+    //   limit: pageSize * 1,
+    // });
+    const { count, rows } = await Goods.findAndCountAll({
+      offset: (pageNum - 1) * pageSize,
+      limit: pageSize * 1,
+    });
+    console.log("rows ====", rows);
+    return {
+      pageNum,
+      pageSize,
+      total: count,
+      list: rows,
+    };
+    // const res = await Goods.findAndCountAll();
+    // return res;
+  }
 }
 
 module.exports = new GoodsService(); // Path: src/service/goods.service.js
