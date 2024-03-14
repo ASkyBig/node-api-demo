@@ -22,7 +22,18 @@ class GoodsService {
         id,
       },
     });
-    return res[0];
+    console.log("removeGoods -> res", res);
+    return res;
+  }
+
+  async restoreGoods(id) {
+    const res = await Goods.restore({
+      where: {
+        id,
+      },
+    });
+    console.log("restoreGoods -> res", res);
+    return res;
   }
 }
 

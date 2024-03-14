@@ -11,12 +11,13 @@ const auth = async (ctx, next) => {
   const { authorization = "" } = ctx.request.header;
   const token = authorization.replace("Bearer ", "");
   console.log("token :>> ", token);
+
   try {
     const user = jwt.verify(token, JWT_SECRET);
     const res = await getUserInfo({ user_name: user.user_name });
     ctx.state.user = res;
   } catch (error) {
-    console.log("error :>> ", error);
+    console.log("auth error :>> ", error);
     switch (error.name) {
       case "TokenExpiredError":
         return ctx.app.emit("error", TokenExpiredError, ctx);

@@ -74,4 +74,9 @@ module.exports = {
     message: "goods remove failed",
     result: "",
   },
+  goodsRestoreError: {
+    code: "10206",
+    message: "goods restore failed",
+    result: "",
+  },
 };

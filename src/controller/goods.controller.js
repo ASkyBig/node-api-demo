@@ -3,12 +3,14 @@ const {
   fileUploadError,
   goodsPublishError,
   goodsInvalidId,
+  goodsRemoveError,
+  goodsRestoreError,
 } = require("../constant/err.type");
 const {
   createGoods,
   updateGoods,
   removeGoods,
-  goodsRemoveError,
+  restoreGoods,
 } = require("../service/goods.service");
 class GoodsController {
   async upload(ctx) {
@@ -62,16 +64,33 @@ class GoodsController {
   }
 
   async remove(ctx) {
-    const res = await removeGoods(ctx.params.id);
-    console.log("remove -> res", res);
-    if (!res) {
+    try {
+      const res = await removeGoods(ctx.params.id);
+      console.log("remove -> res", res);
+      if (!res) {
+        return ctx.app.emit("error", goodsRemoveError, ctx);
+      }
+      ctx.body = {
+        code: 0,
+        message: "remove goods success",
+        result: "",
+      };
+    } catch (error) {
       return ctx.app.emit("error", goodsRemoveError, ctx);
     }
-    ctx.body = {
-      code: 0,
-      message: "remove goods success",
-      result: "",
-    };
+  }
+
+  async restore(ctx) {
+    const res = await restoreGoods(ctx.params.id);
+    if (!res) {
+      return ctx.app.emit("error", goodsRestoreError, ctx);
+    } else {
+      ctx.body = {
+        code: 0,
+        message: "restore goods success",
+        result: "",
+      };
+    }
   }
 }
 
