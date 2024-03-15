@@ -79,4 +79,19 @@ module.exports = {
     message: "goods restore failed",
     result: "",
   },
+  goodsFormatError: {
+    code: "10207",
+    message: "goods format error",
+    result: "",
+  },
+  cartAddError: {
+    code: "10301",
+    message: "add cart failed",
+    result: "",
+  },
+  goodsInvalidId: {
+    code: "10302",
+    message: "goods id invalid",
+    result: "",
+  },
 };

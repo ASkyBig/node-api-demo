@@ -10,7 +10,6 @@ const { getUserInfo } = require("../service/user.service");
 const auth = async (ctx, next) => {
   const { authorization = "" } = ctx.request.header;
   const token = authorization.replace("Bearer ", "");
-  console.log("token :>> ", token);
 
   try {
     const user = jwt.verify(token, JWT_SECRET);

@@ -36,7 +36,7 @@ class GoodsService {
     return res;
   }
 
-  async findGoods({ pageNum, pageSize }) {
+  async findGoods({ pageNum = 1, pageSize = 10 }) {
     // const count = await Goods.count();
     // const rows = await Goods.findAll({
     //   offset: (pageNum - 1) * pageSize,
@@ -55,6 +55,15 @@ class GoodsService {
     };
     // const res = await Goods.findAndCountAll();
     // return res;
+  }
+
+  async findGoodsById(id) {
+    const res = await Goods.findOne({
+      where: {
+        id,
+      },
+    });
+    return res;
   }
 }
 
