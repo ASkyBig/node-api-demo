@@ -5,7 +5,12 @@ const {
   validator,
   goodsIdValidator,
 } = require("../middleware/cart.middleware");
-const { add, findAll, update } = require("../controller/cart.controller");
+const {
+  add,
+  findAll,
+  update,
+  remove,
+} = require("../controller/cart.controller");
 
 router.post("/", auth, validator({ goods_id: "number" }), add);
 
@@ -20,5 +25,7 @@ router.patch(
   }),
   update
 );
+
+router.delete("/", auth, validator({ ids: "array" }), remove);
 
 module.exports = router;

@@ -2,6 +2,7 @@ const {
   createOrUpdate,
   findCart,
   updateCarts,
+  removeCarts,
 } = require("../service/cart.service");
 const { cartAddError, cartFindError } = require("../constant/err.type");
 
@@ -60,6 +61,17 @@ class CartController {
     ctx.body = {
       code: 0,
       message: "update cart success",
+      result: res,
+    };
+  }
+
+  async remove(ctx) {
+    const { ids } = ctx.request.body;
+    const res = await removeCarts(ids);
+
+    ctx.body = {
+      code: 0,
+      message: "remove cart success",
       result: res,
     };
   }

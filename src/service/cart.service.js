@@ -70,6 +70,20 @@ class CartService {
       console.log("updateCarts error :>> ", error);
     }
   }
+
+  async removeCarts(ids) {
+    try {
+      return await Cart.destroy({
+        where: {
+          id: {
+            [Op.in]: ids,
+          },
+        },
+      });
+    } catch (error) {
+      console.log("removeCarts error :>> ", error);
+    }
+  }
 }
 
 module.exports = new CartService();

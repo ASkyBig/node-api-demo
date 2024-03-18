@@ -28,6 +28,7 @@ app.use(
         }
       },
     },
+    parsedMethods: ["POST", "PUT", "PATCH", "GET", "HEAD", "DELETE"],
   })
 );
 app.use(koaStatic(path.join(__dirname, "../upload")));
