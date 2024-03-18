@@ -84,6 +84,42 @@ class CartService {
       console.log("removeCarts error :>> ", error);
     }
   }
+
+  async selectAllCart(user_id) {
+    try {
+      const res = await Cart.update(
+        {
+          selected: true,
+        },
+        {
+          where: {
+            user_id,
+          },
+        }
+      );
+      return res;
+    } catch (error) {
+      console.log("selectAllCart error :>> ", error);
+    }
+  }
+
+  async unSelectAllCart(user_id) {
+    try {
+      const res = await Cart.update(
+        {
+          selected: false,
+        },
+        {
+          where: {
+            user_id,
+          },
+        }
+      );
+      return res;
+    } catch (error) {
+      console.log("unSelectAllCart error :>> ", error);
+    }
+  }
 }
 
 module.exports = new CartService();

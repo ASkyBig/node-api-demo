@@ -3,6 +3,8 @@ const {
   findCart,
   updateCarts,
   removeCarts,
+  selectAllCart,
+  unSelectAllCart,
 } = require("../service/cart.service");
 const { cartAddError, cartFindError } = require("../constant/err.type");
 
@@ -72,6 +74,30 @@ class CartController {
     ctx.body = {
       code: 0,
       message: "remove cart success",
+      result: res,
+    };
+  }
+
+  async selectAll(ctx) {
+    const user_id = ctx.state.user.id;
+
+    const res = await selectAllCart(user_id);
+
+    ctx.body = {
+      code: 0,
+      message: "select all cart success",
+      result: res,
+    };
+  }
+
+  async unSelectAll(ctx) {
+    const user_id = ctx.state.user.id;
+
+    const res = await unSelectAllCart(user_id);
+
+    ctx.body = {
+      code: 0,
+      message: "unSelect all cart success",
       result: res,
     };
   }

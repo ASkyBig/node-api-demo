@@ -10,6 +10,8 @@ const {
   findAll,
   update,
   remove,
+  selectAll,
+  unSelectAll,
 } = require("../controller/cart.controller");
 
 router.post("/", auth, validator({ goods_id: "number" }), add);
@@ -27,5 +29,9 @@ router.patch(
 );
 
 router.delete("/", auth, validator({ ids: "array" }), remove);
+
+router.post("/selectAll", auth, selectAll);
+
+router.post("/unSelectAll", auth, unSelectAll);
 
 module.exports = router;
