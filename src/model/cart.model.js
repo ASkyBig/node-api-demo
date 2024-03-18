@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+const Goods = require("./goods.model");
 
 const seq = require("../db/seq");
 
@@ -31,5 +32,9 @@ const Cart = seq.define(
 );
 
 // Cart.sync({ force: true });
+Cart.belongsTo(Goods, {
+  foreignKey: "goods_id",
+  as: "goods_info",
+});
 
 module.exports = Cart;

@@ -89,9 +89,19 @@ module.exports = {
     message: "add cart failed",
     result: "",
   },
-  goodsInvalidId: {
+  cartFindError: {
     code: "10302",
+    message: "find cart failed",
+    result: "",
+  },
+  goodsInvalidId: {
+    code: "10303",
     message: "goods id invalid",
+    result: "",
+  },
+  cartFormatError: {
+    code: "10304",
+    message: "cart format error",
     result: "",
   },
 };
