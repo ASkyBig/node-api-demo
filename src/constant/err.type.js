@@ -104,4 +104,9 @@ module.exports = {
     message: "cart format error",
     result: "",
   },
+  addrFormatError: {
+    code: "10401",
+    message: "addr format error",
+    result: "",
+  },
 };
