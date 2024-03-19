@@ -30,6 +30,24 @@ class OrderService {
       console.log("findAllOrder error :>> ", error);
     }
   }
+
+  async updateOrder({ id, status }) {
+    try {
+      const res = await Order.update(
+        {
+          status,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      return res;
+    } catch (error) {
+      console.log("updateOrder error :>> ", error);
+    }
+  }
 }
 
 module.exports = new OrderService();
