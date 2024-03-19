@@ -22,6 +22,27 @@ class AddrService {
       console.log("findAllAddr error :>> ", error);
     }
   }
+
+  async updateAddr({ id, consignee, phone, address, is_default }) {
+    try {
+      const res = await Address.update(
+        {
+          consignee,
+          phone,
+          address,
+          is_default,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      return res;
+    } catch (error) {
+      console.log("updateAddr error :>> ", error);
+    }
+  }
 }
 
 module.exports = new AddrService();

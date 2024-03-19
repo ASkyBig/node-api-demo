@@ -1,4 +1,8 @@
-const { createAddr, findAllAddr } = require("../service/addr.service");
+const {
+  createAddr,
+  findAllAddr,
+  updateAddr,
+} = require("../service/addr.service");
 
 class AddrController {
   async create(ctx) {
@@ -25,6 +29,23 @@ class AddrController {
     ctx.body = {
       code: 0,
       message: "get addr success",
+      result: res,
+    };
+  }
+
+  async update(ctx) {
+    const { id } = ctx.request.params;
+    const { consignee, phone, address, is_default = 0 } = ctx.request.body;
+    const res = await updateAddr({
+      id,
+      consignee,
+      phone,
+      address,
+      is_default,
+    });
+    ctx.body = {
+      code: 0,
+      message: "update addr success",
       result: res,
     };
   }
