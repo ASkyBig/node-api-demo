@@ -109,4 +109,9 @@ module.exports = {
     message: "addr format error",
     result: "",
   },
+  orderFormatError: {
+    code: "10501",
+    message: "order format error",
+    result: "",
+  },
 };
