@@ -9,6 +9,27 @@ class OrderService {
       console.log("createOrder error :>> ", error);
     }
   }
+
+  async findAllOrder({ pageNum, pageSize, status }) {
+    try {
+      const { count, rows } = await Order.findAndCountAll({
+        offset: (pageNum - 1) * pageSize,
+        limit: pageSize * 1,
+        attributes: ["goods_info", "order_number", "total", "status"],
+        where: {
+          status,
+        },
+      });
+      return {
+        pageNum,
+        pageSize,
+        total: count,
+        list: rows,
+      };
+    } catch (error) {
+      console.log("findAllOrder error :>> ", error);
+    }
+  }
 }
 
 module.exports = new OrderService();

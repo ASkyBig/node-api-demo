@@ -1,4 +1,4 @@
-const { createOrder } = require("../service/order.service");
+const { createOrder, findAllOrder } = require("../service/order.service");
 
 class OrderController {
   async create(ctx) {
@@ -17,6 +17,18 @@ class OrderController {
     ctx.body = {
       code: 0,
       message: "create order success",
+      result: res,
+    };
+  }
+
+  async findAll(ctx) {
+    const { pageNum = 1, pageSize = 10, status = 0 } = ctx.query;
+
+    const res = await findAllOrder({ pageNum, pageSize, status });
+    console.log("findAll -> res", res);
+    ctx.body = {
+      code: 0,
+      message: "get order success",
       result: res,
     };
   }
