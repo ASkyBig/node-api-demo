@@ -43,6 +43,47 @@ class AddrService {
       console.log("updateAddr error :>> ", error);
     }
   }
+
+  async removeAddr(id) {
+    try {
+      const res = await Address.destroy({
+        where: {
+          id,
+        },
+      });
+      return res;
+    } catch (error) {
+      console.log("removeAddr error :>> ", error);
+    }
+  }
+
+  async setDefaultAddr(user_id, id) {
+    try {
+      const res = await Address.update(
+        {
+          is_default: false,
+        },
+        {
+          where: {
+            user_id,
+          },
+        }
+      );
+      await Address.update(
+        {
+          is_default: true,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      return res;
+    } catch (error) {
+      console.log("setDefaultAddr error :>> ", error);
+    }
+  }
 }
 
 module.exports = new AddrService();

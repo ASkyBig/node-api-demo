@@ -4,7 +4,13 @@ const router = new Router({ prefix: "/address" });
 
 const { auth } = require("../middleware/auth.middleware");
 const { validator } = require("../middleware/addr.middleware");
-const { create, findAll, update } = require("../controller/addr.controller");
+const {
+  create,
+  findAll,
+  update,
+  remove,
+  setDefault,
+} = require("../controller/addr.controller");
 
 router.post(
   "/",
@@ -29,5 +35,9 @@ router.put(
   }),
   update
 );
+
+router.patch("/:id", auth, setDefault);
+
+router.delete("/:id", auth, remove);
 
 module.exports = router;

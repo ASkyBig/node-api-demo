@@ -2,6 +2,8 @@ const {
   createAddr,
   findAllAddr,
   updateAddr,
+  removeAddr,
+  setDefaultAddr,
 } = require("../service/addr.service");
 
 class AddrController {
@@ -46,6 +48,32 @@ class AddrController {
     ctx.body = {
       code: 0,
       message: "update addr success",
+      result: res,
+    };
+  }
+
+  async remove(ctx) {
+    const { id } = ctx.request.params;
+
+    const res = await removeAddr(id);
+    ctx.body = {
+      code: 0,
+      message: "remove addr success",
+      result: res,
+    };
+  }
+
+  async setDefault(ctx) {
+    const { id } = ctx.request.params;
+    console.log("id :>> ", id);
+    const user_id = ctx.state.user.id;
+    console.log("user_id :>> ", user_id);
+
+    const res = await setDefaultAddr(user_id, id);
+
+    ctx.body = {
+      code: 0,
+      message: "set default addr success",
       result: res,
     };
   }
